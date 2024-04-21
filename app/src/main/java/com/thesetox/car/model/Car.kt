@@ -11,7 +11,7 @@ data class Car(
     val prosList: List<String> = emptyList(),
 ) {
     companion object {
-        private val listOfString = listOf("Something")
+        private val listOfString = listOf("Something", "Something")
 
         fun Companion.carPreview(): Car {
             return Car().copy(

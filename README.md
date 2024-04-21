@@ -15,7 +15,9 @@
 
 - Added spotless to enforce coding guidelines.
 
-# Level 1 Result
+## 1. Level 1 Result
+
+### Functionality
 
 - Added Stencil font for app title.
 - Added promotion section.
@@ -35,15 +37,32 @@
 - Use compose to create the UI.
 - Add colors and textStyle for reusable utility components.
 
+### Sample Screenshot
+
 <img src="document/level_1_result(1).png" width="300">   <img src="document/level_1_result(2).png" width="300">
 
-## Project Architecture
-
-### Level 1
+### Project Architecture
 
 ![level1.png](document/level1_architecture.png)
 
-## User Interface Draft
+## 2. Level 2 Result
 
+### Functionality
+
+- Add bulletin point image.
+- Add expandable functionality.
+- Add list of pros and cons.
+- Add default value is expanded.
+- Add click event in main list.
+
+### Sample Screenshot
+
+<img src="document/level_2_result(1).png" width="300">   <img src="document/level_2_result(2).png" width="300">
+
+### Project Architecture
+
+![level2.png](document/level2_architecture.png)
+
+## User Interface Draft
 
 ![ui_draft.png](document/ui_draft.png)

@@ -32,6 +32,8 @@ private fun TextStylePreview() {
 
         Text("titleItemTextStyle", style = titleItemTextStyle)
         Text("labelItemTextStyle", style = labelItemTextStyle)
+        Text("comparisonTitleTextStyle", style = comparisonTitleTextStyle)
+        Text("comparisonDescriptionTextStyle", style = comparisonDescriptionTextStyle)
     }
 }
 
@@ -68,4 +70,18 @@ val labelItemTextStyle =
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
         color = textColor,
+    )
+
+val comparisonTitleTextStyle =
+    TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        color = textColor,
+    )
+
+val comparisonDescriptionTextStyle =
+    TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Color.Black,
     )
