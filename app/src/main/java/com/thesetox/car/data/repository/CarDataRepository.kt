@@ -19,6 +19,8 @@ class CarDataRepository
                     image = imageSource.getImage(it.model),
                     rating = minOf(it.rating, 5),
                     price = getPrice(it.customerPrice),
+                    consList = it.consList.filter { cons -> cons.isNotEmpty() },
+                    prosList = it.prosList.filter { pros -> pros.isNotEmpty() },
                 )
             }
 

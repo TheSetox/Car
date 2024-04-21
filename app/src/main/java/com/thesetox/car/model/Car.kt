@@ -7,14 +7,20 @@ data class Car(
     val image: Int = 0,
     val rating: Int = 0,
     val price: String = "0",
+    val consList: List<String> = emptyList(),
+    val prosList: List<String> = emptyList(),
 ) {
     companion object {
+        private val listOfString = listOf("Something")
+
         fun Companion.carPreview(): Car {
             return Car().copy(
                 name = "Land Rover",
                 image = R.drawable.image_range_rover,
                 price = "120k",
                 rating = 5,
+                consList = listOfString,
+                prosList = listOfString,
             )
         }
 

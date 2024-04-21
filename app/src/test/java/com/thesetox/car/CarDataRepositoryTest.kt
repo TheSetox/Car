@@ -171,6 +171,8 @@ class CarDataRepositoryTest {
                 make = "Alpine",
                 model = "Roadster",
                 rating = rating,
+                consList = emptyList(),
+                prosList = emptyList(),
             )
         val imageSource = mock<ImageSource>()
         val carSource =
@@ -196,6 +198,8 @@ class CarDataRepositoryTest {
                 make = "Alpine",
                 model = "Roadster",
                 rating = rating,
+                consList = emptyList(),
+                prosList = emptyList(),
             )
         val imageSource = mock<ImageSource>()
         val carSource =
@@ -221,6 +225,8 @@ class CarDataRepositoryTest {
                 make = "Alpine",
                 model = "Roadster",
                 rating = 5,
+                consList = emptyList(),
+                prosList = emptyList(),
             )
         val imageSource = mock<ImageSource>()
         val carSource =
@@ -245,6 +251,8 @@ class CarDataRepositoryTest {
                 make = "Alpine",
                 model = "Roadster",
                 rating = 5,
+                consList = emptyList(),
+                prosList = emptyList(),
             )
         val imageSource = mock<ImageSource>()
         val carSource =
@@ -270,6 +278,8 @@ class CarDataRepositoryTest {
                 make = "Alpine",
                 model = "Roadster",
                 rating = 5,
+                consList = emptyList(),
+                prosList = emptyList(),
             )
         val imageSource = mock<ImageSource>()
         val carSource =
@@ -296,6 +306,8 @@ class CarDataRepositoryTest {
                 make = "Alpine",
                 model = "Roadster",
                 rating = 5,
+                consList = emptyList(),
+                prosList = emptyList(),
             )
         val imageSource = mock<ImageSource>()
         val carSource =
@@ -310,5 +322,213 @@ class CarDataRepositoryTest {
         // Assert
         val expectedResult = "${price / 1000}k"
         Assert.assertTrue(result.any { it.price == expectedResult })
+    }
+
+    @Test
+    fun `when listOfCar is called, it should return the cons even if it is empty`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = emptyList(),
+                prosList = emptyList(),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.consList.isEmpty() })
+    }
+
+    @Test
+    fun `when listOfCar is called, it should return the cons`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = listOf("Something"),
+                prosList = emptyList(),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.consList.isNotEmpty() })
+    }
+
+    @Test
+    fun `when listOfCar is called and only one cons is not empty, the cons list size is one`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = listOf("", "Not Empty", ""),
+                prosList = emptyList(),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.consList.size == 1 })
+    }
+
+    @Test
+    fun `when listOfCar is called and two cons is not empty, the cons list size is two`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = listOf("Not Empty", "", "Not Empty"),
+                prosList = emptyList(),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.consList.size == 2 })
+    }
+
+    @Test
+    fun `when listOfCar is called, it should return the pros even if it is empty`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = emptyList(),
+                prosList = emptyList(),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.prosList.isEmpty() })
+    }
+
+    @Test
+    fun `when listOfCar is called, it should return the pros`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = emptyList(),
+                prosList = listOf("Something"),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.prosList.isNotEmpty() })
+    }
+
+    @Test
+    fun `when listOfCar is called and only one pros is not empty, the pros list size is one`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = emptyList(),
+                prosList = listOf("", "Not Empty", ""),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.prosList.size == 1 })
+    }
+
+    @Test
+    fun `when listOfCar is called and two pros is not empty, the pros list size is two`() {
+        // Arrange
+        val carApi =
+            CarApi(
+                customerPrice = 10_000,
+                make = "Alpine",
+                model = "Roadster",
+                rating = 5,
+                consList = emptyList(),
+                prosList = listOf("Not Empty", "", "Not Empty"),
+            )
+        val imageSource = mock<ImageSource>()
+        val carSource =
+            mock<CarSource> {
+                on { listOfCar } doReturn listOf(carApi)
+            }
+        val repository = CarDataRepository(imageSource, carSource)
+
+        // Act
+        val result = repository.listOfCar
+
+        // Assert
+        Assert.assertTrue(result.any { it.prosList.size == 2 })
     }
 }

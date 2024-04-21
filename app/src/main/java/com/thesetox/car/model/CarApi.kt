@@ -8,8 +8,12 @@ data class CarApi(
     val make: String,
     val model: String,
     val rating: Int,
+    val consList: List<String>,
+    val prosList: List<String>,
 ) {
     companion object {
+        private val listOfString = listOf("Something")
+
         fun Companion.listOfCarApi(): List<CarApi> {
             val landRover =
                 CarApi(
@@ -17,6 +21,8 @@ data class CarApi(
                     make = "Land Rover",
                     model = "Range Rover",
                     rating = 10,
+                    consList = listOfString,
+                    prosList = listOfString,
                 )
             val roadster =
                 CarApi(
@@ -24,6 +30,8 @@ data class CarApi(
                     make = "Alpine",
                     model = "Roadster",
                     rating = 7,
+                    consList = listOfString,
+                    prosList = listOfString,
                 )
             val mercedes =
                 CarApi(
@@ -31,6 +39,8 @@ data class CarApi(
                     make = "Mercedes Benz",
                     model = "GLE coupe",
                     rating = 9,
+                    consList = listOfString,
+                    prosList = listOfString,
                 )
             return listOf(landRover, roadster, mercedes)
         }
