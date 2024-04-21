@@ -11,7 +11,7 @@ data class Car(
     companion object {
         fun Companion.carPreview(): Car {
             return Car().copy(
-                name = "Land Rover Range Rover",
+                name = "Land Rover",
                 image = R.drawable.image_range_rover,
                 price = "120k",
                 rating = 5,

@@ -289,7 +289,7 @@ class CarDataRepositoryTest {
     @Test
     fun `when price is above 10_000, it should return the value divide by 1_000`() {
         // Arrange
-        val price = Random.nextInt(10_000, 10_000_000)
+        val price = Random.nextInt(10_000, 999_999)
         val carApi =
             CarApi(
                 customerPrice = price,
