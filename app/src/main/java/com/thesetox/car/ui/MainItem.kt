@@ -36,10 +36,18 @@ import com.thesetox.car.ui.util.titleItemTextStyle
 
 @Preview(showBackground = true)
 @Composable
-private fun MainItemPreview() {
+private fun MainItemExpandedPreview() {
     val modifier = Modifier.padding(horizontal = 16.dp)
     val car = Car.carPreview()
     MainItem(0, 0, car, modifier) {}
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MainItemCollapsedPreview() {
+    val modifier = Modifier.padding(horizontal = 16.dp)
+    val car = Car.carPreview()
+    MainItem(-1, 0, car, modifier) {}
 }
 
 @Composable
