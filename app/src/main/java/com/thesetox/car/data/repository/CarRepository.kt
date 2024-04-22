@@ -4,4 +4,8 @@ import com.thesetox.car.model.Car
 
 interface CarRepository {
     val listOfCar: List<Car>
+
+    val listOfMake: List<String>
+
+    val listOfModel: List<String>
 }

@@ -12,8 +12,10 @@ class CarDataRepository
         imageSource: ImageSource,
         carSource: CarSource,
     ) : CarRepository {
+        private val _listOfCar = carSource.listOfCar
+
         override val listOfCar: List<Car> =
-            carSource.listOfCar.map {
+            _listOfCar.map {
                 Car(
                     name = getName(it),
                     image = imageSource.getImage(it.model),
@@ -23,6 +25,10 @@ class CarDataRepository
                     prosList = it.prosList.filter { pros -> pros.isNotEmpty() },
                 )
             }
+
+        override val listOfMake: List<String> = _listOfCar.map { it.make }
+
+        override val listOfModel: List<String> = _listOfCar.map { it.model }
 
         private fun getName(car: CarApi): String {
             return when (car.make) {

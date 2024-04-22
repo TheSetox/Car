@@ -1,4 +1,4 @@
-package com.thesetox.car
+package com.thesetox.car.repository
 
 import com.thesetox.car.data.repository.CarDataRepository
 import com.thesetox.car.data.source.CarSource
@@ -13,7 +13,7 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import kotlin.random.Random
 
-class CarDataRepositoryTest {
+class ListOfCarTest {
     @Test
     fun `when listOfCar is called, it should trigger listOfCar of carSource`() {
         // Arrange
