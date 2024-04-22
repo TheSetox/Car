@@ -27,6 +27,7 @@ private fun TextStylePreview() {
                 Text("logoTextStyle", style = logoTextStyle)
                 Text("titleTextStyle", style = titleTextStyle)
                 Text("subtitleTextStyle", style = subtitleTextStyle)
+                Text("filterTitleTextStyle", style = filterTitleTextStyle)
             }
         }
 
@@ -55,6 +56,12 @@ val subtitleTextStyle =
     TextStyle(
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
+        color = Color.White,
+    )
+
+val filterTitleTextStyle =
+    TextStyle(
+        fontSize = 24.sp,
         color = Color.White,
     )
 

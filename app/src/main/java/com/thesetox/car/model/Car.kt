@@ -11,7 +11,7 @@ data class Car(
     val prosList: List<String> = emptyList(),
 ) {
     companion object {
-        private val listOfString = listOf("Something", "Something")
+        fun Companion.listOfString() = listOf("Something", "Other", "Another Item")
 
         fun Companion.carPreview(): Car {
             return Car().copy(
@@ -19,8 +19,8 @@ data class Car(
                 image = R.drawable.image_range_rover,
                 price = "120k",
                 rating = 5,
-                consList = listOfString,
-                prosList = listOfString,
+                consList = listOfString(),
+                prosList = listOfString(),
             )
         }
 

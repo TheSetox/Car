@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.thesetox.car.model.Car
 import com.thesetox.car.model.Car.Companion.listOfCar
+import com.thesetox.car.model.Car.Companion.listOfString
 import com.thesetox.car.ui.util.APP_TITLE
 import com.thesetox.car.ui.util.Prepare
 import com.thesetox.car.ui.util.PreparePreview
@@ -36,24 +37,43 @@ private fun MainScreenPreview() {
 
 @Composable
 fun MainScreen() {
-    val state = remember { mutableStateOf<List<Car>>(listOf()) }
+    val listOfCar = remember { mutableStateOf<List<Car>>(listOf()) }
+    val listOfMake = remember { mutableStateOf<List<String>>(listOf()) }
+    val listOfModel = remember { mutableStateOf<List<String>>(listOf()) }
+
     Prepare(
-        preview = { state.value = Car.listOfCar() },
+        preview = {
+            listOfCar.value = Car.listOfCar()
+            listOfMake.value = Car.listOfString()
+            listOfModel.value = Car.listOfString()
+        },
         data = {
             val viewModel: MainViewModel = hiltViewModel()
-            state.value = viewModel.listOfCar
+            listOfCar.value = viewModel.listOfCar
+            listOfMake.value = viewModel.listOfMake
+            listOfModel.value = viewModel.listOfModel
         },
         screen = {
             Scaffold(
                 topBar = { TopBar() },
-                content = { it.MainContent(state.value) },
+                content = {
+                    it.MainContent(
+                        listOfCar = listOfCar.value,
+                        listOfMake = listOfMake.value,
+                        listOfModel = listOfModel.value,
+                    )
+                },
             )
         },
     )
 }
 
 @Composable
-private fun PaddingValues.MainContent(listOfCar: List<Car>) {
+private fun PaddingValues.MainContent(
+    listOfCar: List<Car>,
+    listOfMake: List<String>,
+    listOfModel: List<String>,
+) {
     val firstIndex = 0
     var selectedItemIndex by remember { mutableIntStateOf(firstIndex) }
     LazyColumn(
@@ -62,6 +82,9 @@ private fun PaddingValues.MainContent(listOfCar: List<Car>) {
     ) {
         // First Section for promotion
         item { PromotionSection() }
+
+        // Second Section for filter
+        item { FilterSection(listOfMake = listOfMake, listOfModel = listOfModel) }
 
         // Section for the Main List
         val modifier = Modifier.padding(horizontal = 16.dp)

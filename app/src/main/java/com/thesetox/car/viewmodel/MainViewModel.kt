@@ -12,4 +12,8 @@ class MainViewModel
         repository: CarRepository,
     ) : ViewModel() {
         val listOfCar = repository.listOfCar
+
+        val listOfMake = repository.listOfMake
+
+        val listOfModel = repository.listOfModel
     }
