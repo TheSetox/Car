@@ -14,7 +14,7 @@
 
 ## Others
 
-- Added spotless to enforce coding guidelines. **(Added for Bonus Level)**
+- Added spotless to enforce coding guidelines.
 - Coroutine and Flow - for asynchronous access to database. **(Added for Bonus Level)**
 
 ## I. Level 1 Result
