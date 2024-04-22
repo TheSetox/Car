@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +29,7 @@ import com.thesetox.car.ui.util.Prepare
 import com.thesetox.car.ui.util.PreparePreview
 import com.thesetox.car.ui.util.logoTextStyle
 import com.thesetox.car.ui.util.orange
+import com.thesetox.car.viewmodel.Action
 import com.thesetox.car.viewmodel.MainViewModel
 
 @Preview(showBackground = true)
@@ -37,33 +40,33 @@ private fun MainScreenPreview() {
 
 @Composable
 fun MainScreen() {
-    val listOfCar = remember { mutableStateOf<List<Car>>(listOf()) }
-    val listOfMake = remember { mutableStateOf<List<String>>(listOf()) }
-    val listOfModel = remember { mutableStateOf<List<String>>(listOf()) }
-    var onSelected: (String, String) -> Unit = { _, _ -> }
-
+    var listOfCarState: State<List<Car>> = remember { mutableStateOf(listOf()) }
+    val listOfMakeState = remember { mutableStateOf<List<String>>(listOf()) }
+    val listOfModelState = remember { mutableStateOf<List<String>>(listOf()) }
+    var onAction: (Action) -> Unit = {}
     Prepare(
         preview = {
-            listOfCar.value = Car.listOfCar()
-            listOfMake.value = Car.listOfString()
-            listOfModel.value = Car.listOfString()
+            listOfCarState = mutableStateOf(Car.listOfCar())
+            listOfMakeState.value = Car.listOfString()
+            listOfModelState.value = Car.listOfString()
         },
         data = {
             val viewModel: MainViewModel = hiltViewModel()
-            listOfCar.value = viewModel.listOfCar.value
-            listOfMake.value = viewModel.listOfMake
-            listOfModel.value = viewModel.listOfModel
-            onSelected = viewModel.onSelectedFilter()
+            listOfCarState = viewModel.listOfCarState.collectAsState()
+            listOfMakeState.value = viewModel.listOfMakeState.value
+            listOfModelState.value = viewModel.listOfModelState.value
+            onAction = { viewModel.onAction(it) }
+            onAction(Action.LoadCarList)
         },
         screen = {
             Scaffold(
                 topBar = { TopBar() },
                 content = {
                     it.MainContent(
-                        listOfCar = listOfCar.value,
-                        listOfMake = listOfMake.value,
-                        listOfModel = listOfModel.value,
-                        onSelected = onSelected,
+                        listOfCar = listOfCarState.value,
+                        listOfMake = listOfMakeState.value,
+                        listOfModel = listOfModelState.value,
+                        onAction = onAction,
                     )
                 },
             )
@@ -76,7 +79,7 @@ private fun PaddingValues.MainContent(
     listOfCar: List<Car>,
     listOfMake: List<String>,
     listOfModel: List<String>,
-    onSelected: (String, String) -> Unit,
+    onAction: (Action) -> Unit,
 ) {
     val firstIndex = 0
     var selectedItemIndex by remember { mutableIntStateOf(firstIndex) }
@@ -92,7 +95,7 @@ private fun PaddingValues.MainContent(
             FilterSection(
                 listOfMake = listOfMake,
                 listOfModel = listOfModel,
-                onSelected = onSelected,
+                onAction = onAction,
             )
         }
 

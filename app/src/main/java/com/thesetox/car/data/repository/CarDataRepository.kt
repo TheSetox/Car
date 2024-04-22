@@ -1,7 +1,9 @@
 package com.thesetox.car.data.repository
 
+import com.thesetox.car.data.database.CarEntity
 import com.thesetox.car.data.source.CarSource
 import com.thesetox.car.data.source.ImageSource
+import com.thesetox.car.data.source.LocalSource
 import com.thesetox.car.model.Car
 import com.thesetox.car.model.CarApi
 import javax.inject.Inject
@@ -10,26 +12,43 @@ class CarDataRepository
     @Inject
     constructor(
         private val imageSource: ImageSource,
-        carSource: CarSource,
+        private val carSource: CarSource,
+        private val localSource: LocalSource,
     ) : CarRepository {
-        private val _listOfCar = carSource.listOfCar
+        private suspend fun getListOfCar(): List<CarEntity> {
+            return localSource.listOfCar().ifEmpty {
+                val currentListOfCar = carSource.listOfCar.map { it.mapToCarEntity() }
+                localSource.insertListOfCar(currentListOfCar)
+                currentListOfCar
+            }
+        }
 
-        override val listOfCar: List<Car> = _listOfCar.map { it.mapToCar() }
+        override suspend fun listOfCar(): List<Car> = getListOfCar().map { it.mapToCar() }
 
-        override val listOfMake: List<String> = _listOfCar.map { it.make }
+        override suspend fun listOfMake(): List<String> = getListOfCar().map { it.make }
 
-        override val listOfModel: List<String> = _listOfCar.map { it.model }
+        override suspend fun listOfModel(): List<String> = getListOfCar().map { it.model }
 
-        override fun filterListOfCar(
+        override suspend fun filterListOfCar(
             make: String,
             model: String,
         ): List<Car> {
-            val filterList = _listOfCar.filter { it.make == make || it.model == model }
+            val filterList = getListOfCar().filter { it.make == make || it.model == model }
             // If empty, return default list. If not return the filtered list.
-            return if (filterList.isEmpty()) listOfCar else filterList.map { it.mapToCar() }
+            return if (filterList.isEmpty()) listOfCar() else filterList.map { it.mapToCar() }
         }
 
-        private fun CarApi.mapToCar() =
+        private fun CarApi.mapToCarEntity() =
+            CarEntity(
+                customerPrice = customerPrice,
+                make = make,
+                model = model,
+                rating = rating,
+                consList = consList,
+                prosList = prosList,
+            )
+
+        private fun CarEntity.mapToCar() =
             Car(
                 name = getName(this),
                 image = imageSource.getImage(model),
@@ -39,7 +58,7 @@ class CarDataRepository
                 prosList = prosList.filter { pros -> pros.isNotEmpty() },
             )
 
-        private fun getName(car: CarApi): String {
+        private fun getName(car: CarEntity): String {
             return when (car.make) {
                 "Land Rover" -> car.model // Return
                 "Mercedes Benz" -> car.make

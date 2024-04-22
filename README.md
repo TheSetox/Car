@@ -10,10 +10,12 @@
 - Hilt for dependency Injection - for managing class dependencies.
 - Mockito - used for helping mock object in unit tests.
 - KotlinX Serialization - for deserialization of Json object.
+- Room - for accessing sqlite database **(Added for Bonus Level)**
 
 ## Others
 
-- Added spotless to enforce coding guidelines.
+- Added spotless to enforce coding guidelines. **(Added for Bonus Level)**
+- Coroutine and Flow - for asynchronous access to database. **(Added for Bonus Level)**
 
 ## I. Level 1 Result
 
@@ -78,10 +80,24 @@
 
 <img src="document/level_3_result(1).png" width="300">   <img src="document/level_3_result(2).png" width="300">
 <img src="document/level_3_result(3).png" width="300">   <img src="document/level_3_result(4).png" width="300">
+<img src="document/level_3_result(5).png" width="300">   <img src="document/level_3_result(6).png" width="300">
 
 ### Project Architecture
 
 ![level3.png](document/level3_architecture.png)
+
+## IV. Bonus Level Result
+
+### Functionality
+
+- Add database functionality.
+- Add coroutine implementation.
+- Add state flow implementation.
+- Add LocalSource for abstraction for database.
+
+### Project Architecture
+
+![bonus_level.png](document/bonus_level_architecture.png)
 
 ## User Interface Draft
 

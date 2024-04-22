@@ -24,18 +24,19 @@ import com.thesetox.car.ui.util.DEFAULT_MODEL
 import com.thesetox.car.ui.util.darkGray
 import com.thesetox.car.ui.util.filterTitleTextStyle
 import com.thesetox.car.ui.util.labelItemTextStyle
+import com.thesetox.car.viewmodel.Action
 
 @Preview(showBackground = true)
 @Composable
 private fun FilterSectionPreview() {
-    FilterSection(listOf(), listOf()) { _, _ -> }
+    FilterSection(listOf(), listOf()) {}
 }
 
 @Composable
 fun FilterSection(
     listOfMake: List<String>,
     listOfModel: List<String>,
-    onSelected: (String, String) -> Unit,
+    onAction: (Action) -> Unit,
 ) {
     var selectedMake by remember { mutableStateOf(DEFAULT_MAKE) }
     var selectedModel by remember { mutableStateOf(DEFAULT_MODEL) }
@@ -56,13 +57,23 @@ fun FilterSection(
         ) {
             Text(text = "Filters", style = filterTitleTextStyle)
             Spacer(modifier = Modifier.size(8.dp))
-            FilterButton(defaultLabel = DEFAULT_MAKE, listOfMake) {
+            FilterButton(
+                defaultLabel = DEFAULT_MAKE,
+                list = listOfMake,
+                action = Action.LoadMakeList,
+                onAction = onAction,
+            ) {
                 selectedMake = it
-                onSelected(selectedMake, selectedModel)
+                onAction(Action.FilterList(selectedMake, selectedModel))
             }
-            FilterButton(defaultLabel = DEFAULT_MODEL, listOfModel) {
+            FilterButton(
+                defaultLabel = DEFAULT_MODEL,
+                list = listOfModel,
+                action = Action.LoadModelList,
+                onAction = onAction,
+            ) {
                 selectedModel = it
-                onSelected(selectedMake, selectedModel)
+                onAction(Action.FilterList(selectedMake, selectedModel))
             }
         }
     }
@@ -72,6 +83,8 @@ fun FilterSection(
 fun FilterButton(
     defaultLabel: String,
     list: List<String>,
+    action: Action,
+    onAction: (Action) -> Unit,
     onSelected: (String) -> Unit,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
@@ -81,7 +94,10 @@ fun FilterButton(
             Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
-                .clickable { isExpanded = !isExpanded },
+                .clickable {
+                    onAction(action)
+                    isExpanded = !isExpanded
+                },
         shape = RoundedCornerShape(8.dp),
         shadowElevation = 8.dp,
     ) {

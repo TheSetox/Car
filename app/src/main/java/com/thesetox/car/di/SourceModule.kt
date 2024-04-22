@@ -2,8 +2,10 @@ package com.thesetox.car.di
 
 import com.thesetox.car.data.source.CarSource
 import com.thesetox.car.data.source.ImageSource
+import com.thesetox.car.data.source.LocalSource
 import com.thesetox.car.data.source.impl.CarDataSource
 import com.thesetox.car.data.source.impl.ImageDataSource
+import com.thesetox.car.data.source.impl.LocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,4 +19,7 @@ abstract class SourceModule {
 
     @Binds
     abstract fun bindImageSource(source: ImageDataSource): ImageSource
+
+    @Binds
+    abstract fun bindLocalSource(source: LocalDataSource): LocalSource
 }

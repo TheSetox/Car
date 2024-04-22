@@ -3,13 +3,13 @@ package com.thesetox.car.data.repository
 import com.thesetox.car.model.Car
 
 interface CarRepository {
-    val listOfCar: List<Car>
+    suspend fun listOfCar(): List<Car>
 
-    val listOfMake: List<String>
+    suspend fun listOfMake(): List<String>
 
-    val listOfModel: List<String>
+    suspend fun listOfModel(): List<String>
 
-    fun filterListOfCar(
+    suspend fun filterListOfCar(
         make: String,
         model: String,
     ): List<Car>

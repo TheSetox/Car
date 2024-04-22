@@ -5,4 +5,5 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kapt)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.ksp)
 }
