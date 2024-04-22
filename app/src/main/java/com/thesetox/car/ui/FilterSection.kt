@@ -28,14 +28,18 @@ import com.thesetox.car.ui.util.labelItemTextStyle
 @Preview(showBackground = true)
 @Composable
 private fun FilterSectionPreview() {
-    FilterSection(listOf(), listOf())
+    FilterSection(listOf(), listOf()) { _, _ -> }
 }
 
 @Composable
 fun FilterSection(
     listOfMake: List<String>,
     listOfModel: List<String>,
+    onSelected: (String, String) -> Unit,
 ) {
+    var selectedMake by remember { mutableStateOf(DEFAULT_MAKE) }
+    var selectedModel by remember { mutableStateOf(DEFAULT_MODEL) }
+
     Surface(
         modifier =
             Modifier
@@ -52,8 +56,14 @@ fun FilterSection(
         ) {
             Text(text = "Filters", style = filterTitleTextStyle)
             Spacer(modifier = Modifier.size(8.dp))
-            FilterButton(defaultLabel = DEFAULT_MAKE, listOfMake)
-            FilterButton(defaultLabel = DEFAULT_MODEL, listOfModel)
+            FilterButton(defaultLabel = DEFAULT_MAKE, listOfMake) {
+                selectedMake = it
+                onSelected(selectedMake, selectedModel)
+            }
+            FilterButton(defaultLabel = DEFAULT_MODEL, listOfModel) {
+                selectedModel = it
+                onSelected(selectedMake, selectedModel)
+            }
         }
     }
 }
@@ -62,6 +72,7 @@ fun FilterSection(
 fun FilterButton(
     defaultLabel: String,
     list: List<String>,
+    onSelected: (String) -> Unit,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     var selectedFilter by remember { mutableStateOf(defaultLabel) }
@@ -89,6 +100,7 @@ fun FilterButton(
                 onClick = {
                     selectedFilter = defaultLabel
                     isExpanded = false
+                    onSelected(selectedFilter)
                 },
             )
             list.forEach { label ->
@@ -97,6 +109,7 @@ fun FilterButton(
                     onClick = {
                         selectedFilter = label
                         isExpanded = false
+                        onSelected(selectedFilter)
                     },
                 )
             }

@@ -9,26 +9,35 @@ import javax.inject.Inject
 class CarDataRepository
     @Inject
     constructor(
-        imageSource: ImageSource,
+        private val imageSource: ImageSource,
         carSource: CarSource,
     ) : CarRepository {
         private val _listOfCar = carSource.listOfCar
 
-        override val listOfCar: List<Car> =
-            _listOfCar.map {
-                Car(
-                    name = getName(it),
-                    image = imageSource.getImage(it.model),
-                    rating = minOf(it.rating, 5),
-                    price = getPrice(it.customerPrice),
-                    consList = it.consList.filter { cons -> cons.isNotEmpty() },
-                    prosList = it.prosList.filter { pros -> pros.isNotEmpty() },
-                )
-            }
+        override val listOfCar: List<Car> = _listOfCar.map { it.mapToCar() }
 
         override val listOfMake: List<String> = _listOfCar.map { it.make }
 
         override val listOfModel: List<String> = _listOfCar.map { it.model }
+
+        override fun filterListOfCar(
+            make: String,
+            model: String,
+        ): List<Car> {
+            val filterList = _listOfCar.filter { it.make == make || it.model == model }
+            // If empty, return default list. If not return the filtered list.
+            return if (filterList.isEmpty()) listOfCar else filterList.map { it.mapToCar() }
+        }
+
+        private fun CarApi.mapToCar() =
+            Car(
+                name = getName(this),
+                image = imageSource.getImage(model),
+                rating = minOf(rating, 5),
+                price = getPrice(customerPrice),
+                consList = consList.filter { cons -> cons.isNotEmpty() },
+                prosList = prosList.filter { pros -> pros.isNotEmpty() },
+            )
 
         private fun getName(car: CarApi): String {
             return when (car.make) {

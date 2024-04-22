@@ -15,7 +15,7 @@
 
 - Added spotless to enforce coding guidelines.
 
-## 1. Level 1 Result
+## I. Level 1 Result
 
 ### Functionality
 
@@ -45,7 +45,7 @@
 
 ![level1.png](document/level1_architecture.png)
 
-## 2. Level 2 Result
+## II. Level 2 Result
 
 ### Functionality
 
@@ -54,6 +54,7 @@
 - Add list of pros and cons.
 - Add default value is expanded.
 - Add click event in main list.
+- Update and add more unit tests.
 
 ### Sample Screenshot
 
@@ -62,6 +63,25 @@
 ### Project Architecture
 
 ![level2.png](document/level2_architecture.png)
+
+## III. Level 3 Result
+
+### Functionality
+
+- Add filter section UI.
+- Add dropdown functionality.
+- Add fetching of list of make and list of model.
+- Update and add more unit tests.
+- Add filter functionality.
+
+### Sample Screenshot
+
+<img src="document/level_3_result(1).png" width="300">   <img src="document/level_3_result(2).png" width="300">
+<img src="document/level_3_result(3).png" width="300">   <img src="document/level_3_result(4).png" width="300">
+
+### Project Architecture
+
+![level3.png](document/level3_architecture.png)
 
 ## User Interface Draft
 

@@ -8,4 +8,9 @@ interface CarRepository {
     val listOfMake: List<String>
 
     val listOfModel: List<String>
+
+    fun filterListOfCar(
+        make: String,
+        model: String,
+    ): List<Car>
 }

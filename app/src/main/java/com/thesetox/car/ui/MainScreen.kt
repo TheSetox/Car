@@ -40,6 +40,7 @@ fun MainScreen() {
     val listOfCar = remember { mutableStateOf<List<Car>>(listOf()) }
     val listOfMake = remember { mutableStateOf<List<String>>(listOf()) }
     val listOfModel = remember { mutableStateOf<List<String>>(listOf()) }
+    var onSelected: (String, String) -> Unit = { _, _ -> }
 
     Prepare(
         preview = {
@@ -49,9 +50,10 @@ fun MainScreen() {
         },
         data = {
             val viewModel: MainViewModel = hiltViewModel()
-            listOfCar.value = viewModel.listOfCar
+            listOfCar.value = viewModel.listOfCar.value
             listOfMake.value = viewModel.listOfMake
             listOfModel.value = viewModel.listOfModel
+            onSelected = viewModel.onSelectedFilter()
         },
         screen = {
             Scaffold(
@@ -61,6 +63,7 @@ fun MainScreen() {
                         listOfCar = listOfCar.value,
                         listOfMake = listOfMake.value,
                         listOfModel = listOfModel.value,
+                        onSelected = onSelected,
                     )
                 },
             )
@@ -73,6 +76,7 @@ private fun PaddingValues.MainContent(
     listOfCar: List<Car>,
     listOfMake: List<String>,
     listOfModel: List<String>,
+    onSelected: (String, String) -> Unit,
 ) {
     val firstIndex = 0
     var selectedItemIndex by remember { mutableIntStateOf(firstIndex) }
@@ -84,7 +88,13 @@ private fun PaddingValues.MainContent(
         item { PromotionSection() }
 
         // Second Section for filter
-        item { FilterSection(listOfMake = listOfMake, listOfModel = listOfModel) }
+        item {
+            FilterSection(
+                listOfMake = listOfMake,
+                listOfModel = listOfModel,
+                onSelected = onSelected,
+            )
+        }
 
         // Section for the Main List
         val modifier = Modifier.padding(horizontal = 16.dp)
