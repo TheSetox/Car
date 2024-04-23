@@ -15,7 +15,7 @@ hiltPlugin = "2.47"
 hiltCompose = "1.2.0"
 mockito = "3.2.0"
 spotless = "6.25.0"
-ksp-plugin = "1.9.21-1.0.15"
+ksp-plugin = "1.9.23-1.0.20"
 room = "2.6.1"
 coroutine-test = "1.8.0"
 
